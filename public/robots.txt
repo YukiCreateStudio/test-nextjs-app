@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap:https://12-27-project.pages.dev/sitemap.xml
