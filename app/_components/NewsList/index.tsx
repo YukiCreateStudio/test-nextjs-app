@@ -3,6 +3,7 @@ import styles from "./index.module.css";
 import { News } from "@/app/_libs/microcms";
 import CategoryTab from "../CategoryTab";
 import DateTab from "../DateTab";
+import Link from "next/link";
 
 type Props = {
   news: News[];
@@ -16,7 +17,7 @@ export default function NewsList({ news }: Props) {
     <ul>
       {news.map((article) => (
         <li key={article.id} className={styles.list}>
-          <div className={styles.link}>
+          <Link href="/news" className={styles.link}>
             <Image
               className={styles.image}
               src="/no-image.png"
@@ -31,7 +32,7 @@ export default function NewsList({ news }: Props) {
                 <DateTab date={article.publishedAt ?? article.createdAt} />
               </dd>
             </dl>
-          </div>
+          </Link>
         </li>
       ))}
     </ul>
