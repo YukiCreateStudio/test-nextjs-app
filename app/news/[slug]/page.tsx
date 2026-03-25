@@ -1,4 +1,8 @@
+import Article from "@/app/_components/Article";
 import { getNewsDetail } from "@/app/_libs/microcms";
+import styles from "./page.module.css";
+import ButtonLink from "@/app/_components/ButtonLink";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: Promise<{
@@ -7,9 +11,15 @@ type Props = {
 };
 
 export default async function Page({ params }: Props) {
-  const { slug } = await params; // ← ここが重要
+  const { slug } = await params;
+  const data = await getNewsDetail(slug).catch(notFound);
 
-  const data = await getNewsDetail(slug);
-
-  return <div>{data.title}</div>;
+  return (
+    <>
+      <Article data={data} />
+      <div className={styles.footer}>
+        <ButtonLink href="/news">ニュース一覧へ</ButtonLink>
+      </div>
+    </>
+  );
 }
