@@ -50,6 +50,7 @@ export const getNewsList = async (queries?: MicroCMSQueries) => {
     endpoint: "news",
     queries,
   });
+  // console.log("totalCount:",listData.totalCount)
   return listData;
 };
 

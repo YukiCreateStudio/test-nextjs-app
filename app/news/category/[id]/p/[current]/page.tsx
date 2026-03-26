@@ -8,26 +8,35 @@ import { notFound } from "next/navigation";
 type Props = {
   params: Promise<{
     id: string;
+    current: string;
   }>;
 };
 
 export default async function Page({ params }: Props) {
-  const { id } = await params;
-  const category = await getCategoryDetail(id).catch(notFound);
+  const paramsData = await params;
+  const category = await getCategoryDetail(paramsData.id).catch(notFound);
+  const current = parseInt(paramsData.current, NEWS_LIMIT);
+  if (Number.isNaN(current) || current < 1) {
+    notFound();
+  }
   const { contents: news, totalCount } = await getNewsList({
-    limit: NEWS_LIMIT,
     filters: `category[equals]${category.id}`,
+    limit: NEWS_LIMIT,
+    offset: NEWS_LIMIT * (current - 1),
   });
-  // console.log("category:",category.id);
+  if (news.length === 0) {
+    notFound();
+  }
+  console.log("current:", current);
   return (
     <>
       <p>
         <CategoryTab category={category} />
-        の一覧
       </p>
       <NewsList news={news} />
       <Pagination
         totalCount={totalCount}
+        current={current}
         basePath={`/news/category/${category.id}`}
       />
     </>
