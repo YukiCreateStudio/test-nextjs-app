@@ -1,21 +1,24 @@
-import { News } from "@/app/_libs/microcms"
+import { News } from "@/app/_libs/microcms";
 import styles from "./index.module.css";
 import CategoryTab from "../CategoryTab";
 import DateTab from "../DateTab";
 import Image from "next/image";
+import Link from "next/link";
 
 type Props = {
-  data:News
-}
+  data: News;
+};
 
-export default function Article ({data}:Props) {
+export default function Article({ data }: Props) {
   return (
     <main>
       <h1 className={styles.title}>{data.title}</h1>
       <p className={styles.description}>{data.description}</p>
       <div className={styles.meta}>
-        <CategoryTab category={data.category}/>
-        <DateTab date={data.publishedAt ??  data.createdAt}/>
+        <Link href={`/news/category/${data.category.id}`}>
+          <CategoryTab category={data.category} />
+        </Link>
+        <DateTab date={data.publishedAt ?? data.createdAt} />
       </div>
       {data.thumbnail && (
         <Image
@@ -26,7 +29,10 @@ export default function Article ({data}:Props) {
           height={data.thumbnail.height}
         />
       )}
-      <div className={styles.content} dangerouslySetInnerHTML={{__html:data.content}}/>
+      <div
+        className={styles.content}
+        dangerouslySetInnerHTML={{ __html: data.content }}
+      />
     </main>
-  )
+  );
 }
