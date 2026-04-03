@@ -1,6 +1,7 @@
 import CategoryTab from "@/app/_components/CategoryTab";
 import NewsList from "@/app/_components/NewsList";
 import Pagination from "@/app/_components/Pagination";
+import SearchField from "@/app/_components/SearchField";
 import { NEWS_LIMIT } from "@/app/_constants";
 import { getCategoryDetail, getNewsList } from "@/app/_libs/microcms";
 import { notFound, redirect } from "next/navigation";
@@ -39,6 +40,7 @@ export default async function Page({ params, searchParams }: Props) {
 
   return (
     <>
+      <SearchField/>
       <p>
         <CategoryTab category={category} />
         の一覧

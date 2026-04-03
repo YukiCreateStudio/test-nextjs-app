@@ -2,10 +2,13 @@
 
 import Image from "next/image";
 import styles from "./index.module.css";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function SearchField() {
+function SearchFieldComponent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     const q = e.currentTarget.elements.namedItem("q");
@@ -15,6 +18,8 @@ export default function SearchField() {
       router.push(`/news/search?${params.toString()}`);
     }
   };
+
+  // console.log("searchParams:", searchParams);
 
   return (
     <>
@@ -30,11 +35,20 @@ export default function SearchField() {
           <input
             type="text"
             name="q"
+            defaultValue={searchParams.get("q") ?? undefined}
             placeholder="キーワードを入力"
             className={styles.searchInput}
           />
         </label>
       </form>
     </>
+  );
+}
+
+export default function SearchField() {
+  return (
+    <Suspense>
+      <SearchFieldComponent />
+    </Suspense>
   );
 }
