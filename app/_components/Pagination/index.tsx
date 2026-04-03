@@ -14,19 +14,23 @@ export default function Pagination({
   current = 1,
   basePath = "/news",
 }: Props) {
-  console.log(totalCount);
+  // console.log(totalCount);
   const pages = Array.from(
     { length: Math.ceil(totalCount / NEWS_LIMIT) },
     (_, i) => i + 1,
   );
-  console.log(pages);
   return (
     <nav>
       <ul className={styles.container}>
         {pages.map((p) => (
           <li className={styles.list} key={p}>
             {current !== p ? (
-              <Link href={`${basePath}/p/${p}`} className={styles.item}>
+              <Link
+                href={`${basePath}${
+                  basePath.includes("?") ? "&" : "?"
+                }page=${p}`}
+                className={styles.item}
+              >
                 {p}
               </Link>
             ) : (

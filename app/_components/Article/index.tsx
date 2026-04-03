@@ -31,7 +31,7 @@ export default function Article({ data }: Props) {
       )}
       <div
         className={styles.content}
-        dangerouslySetInnerHTML={{ __html: data.content }}
+        dangerouslySetInnerHTML={{ __html: data.content.trim() }}
       />
     </main>
   );
